@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+table, th, td{
+border : solid 1px black;
+}
+</style>
+
+<title>Insert title here</title>
+</head>
+<body>
+<p>You are in data Html Page<br></p>
+<br><br/>
+
+	<form id="MyForm" >
+    Enter Note title :<input type ="text" name="titler"> <br>
+	<input type="submit" value="mandate" onsubmit="callselectSingleServlet()">
+	</form>
+<br/><br/>
+
+<!-- 		<table id="contentTable"> -->
+<!-- 		<tr> -->
+<!-- 		<th>ID</th><th>Title</th><th>Description</th> -->
+<!-- 		</tr>  -->
+<!-- 		</table> -->
+		
+      	<div id="loading"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="application/javascript">
+function callselectDataServlet() 
+{
+ var title = document.getElementById('titler');
+	document.getElementById('loading').innerHTML = "Loading Data...";
+
+	httpRequest = new XMLHttpRequest();
+
+	if (!httpRequest) 
+	{
+		console.log('Unable to create XMLHTTP instance');
+		return false;
+	}
+		httpRequest.open('GET', 'selectSingle?titler='+title);
+		httpRequest.responseType = 'json';
+		httpRequest.send();
+		httpRequest.onreadystatechange = function() 
+		{
+			if (httpRequest.readyState === XMLHttpRequest.DONE) 
+			{
+
+			 document.getElementById('loading').innerHTML = "";
+
+					if (httpRequest.status === 200) 
+						{
+
+							var array = httpRequest.response;
+							//var array = JSON.parse(httpRequest.responseText);
+							//var table = document.getElementById('contentTable');
+						
+							     var col = [];
+      							  for (var i = 0; i < array.length; i++) 
+      							  {
+	  
+      							      for (var key in array[i]) 
+      							      {
+        						        if (col.indexOf(key) === -1) 
+        						        {
+                    						col.push(key);
+                						}
+            						  }
+        					      }
+      							  
+      							  
+      							  var table = document.createElement("table");
+      							  table.id='contentTable';
+      							  
+      							 var tr = table.insertRow(-1);                   // table row.
+
+      					        for (var u = 0; u < col.length; u++) 
+      					        {
+      					            var th = document.createElement("th");      // table header.
+      					            th.innerHTML = col[u];
+      					            tr.appendChild(th);
+      					        }
+							
+							
+							for (var i=0; i< array.length; i++) 
+								{
+
+							//var table = document.getElementById('contentTable');
+									var row = table.insertRow(table.rows.length);
+									var cell1 = row.insertCell(0);
+									var cell2 = row.insertCell(1);
+									var cell3 = row.insertCell(2);
+									var id = document.createTextNode(array[i].id);
+									var title = document.createTextNode(array[i].title);
+									var description = document.createTextNode(array[i].description);
+									cell1.appendChild(id);
+									cell2.appendChild(title);
+									cell3.appendChild(description);
+								}	
+							
+							
+							
+							 //var tablex = document.getElementById('contentTable');
+							var btn = document.querySelector(".oner"); 
+					              btn.remove();
+					              document.getElementById('loading').innerHTML="";
+					           document.getElementById('loading').appendChild(table);
+						}
+					
+					else  
+						{
+						console.log('Something went wrong..!!');
+			 			}
+   	  		}
+  }
+}
+</script>
+
+</body>
+</html>

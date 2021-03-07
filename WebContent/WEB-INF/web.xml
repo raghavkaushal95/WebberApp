@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  
+ <servlet>
+	    <servlet-name>abc</servlet-name>
+     	<servlet-class>insertDataServlet</servlet-class>
+  </servlet>
+	
+  <servlet-mapping>
+  		 <servlet-name>abc</servlet-name>
+		 <url-pattern>/insertData</url-pattern>
+  </servlet-mapping>
+	
+  <servlet>
+	    <servlet-name>pqr</servlet-name>
+     	<servlet-class>selectDataServlet</servlet-class>
+  </servlet>
+	
+  <servlet-mapping>
+  		 <servlet-name>pqr</servlet-name>
+		 <url-pattern>/selectAll</url-pattern>
+  </servlet-mapping>
+	
+   <servlet>
+	    <servlet-name>steve</servlet-name>
+     	<servlet-class>selectSingleDataServlet</servlet-class>
+  </servlet>
+	
+  <servlet-mapping>
+  		 <servlet-name>steve</servlet-name>
+		 <url-pattern>/selectSingle</url-pattern>
+  </servlet-mapping>
+	
+  
+</web-app>
