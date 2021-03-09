@@ -67,19 +67,19 @@ form  input.input2{
 	    x = document.getElementById("title-input").value;
 	    var y;
 	    y = document.getElementById("confirmationText").value;
-	    if (x == "") {
-	        alert("DO NOT LEAVE ANYTHING EMPTY");
+	    if (x == ""|| y=="") {
+	      alert("DO NOT LEAVE ANYTHING EMPTY");
 	        return false;
 	    }
 	
-	    else if( x!="")
+	    else if( x!="" && y!="")
 	    	{
 	    	document.getElementById("Form1").action ="insertData";
 	       document.getElementById("Form1").submit();
 	    //  var newForm =appendChild(titler);
 	        // document.getElementById("MyForm").action = "selectSingle";
 	    //  document.getElementById("MyForm").submit();
-             return true;
+             return false;
 	    	}
    
    

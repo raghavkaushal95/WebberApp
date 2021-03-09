@@ -137,9 +137,9 @@ public class DataBaseConnector {
 	
 	
 	
-	public void InsertIntoTableNotes(String note_name,String desc)
+	public int  InsertIntoTableNotes(String note_name,String desc) throws Exception
 	{
-	try {
+	
 		
 		 //public String QUERY_NOTES_NAME="SELECT "+COLUMN_NOTE_ID+" FROM "+ TABLE_NOTES+" WHERE "+COLUMN_NOTE_NAME +" = ?";
   
@@ -148,7 +148,8 @@ public class DataBaseConnector {
 		            
 		     if(results.next())
 		     {
-		    	 System.out.println("Sorry!, The record is already present !!Insertion is not allowed");  	 
+		    	 System.out.println("Sorry!, The record is already present !!Insertion is not allowed");  
+		    	 return -1;
 		     }
 		     
 		     else 
@@ -174,17 +175,11 @@ public class DataBaseConnector {
 		    	 {
 		    		 System.out.println("New Record Successfully Inserted ");
 		    	 }
-		    	 
+		    	
 		     }
 		     results.close();
-			}
+		     return 1;
 		
-	   catch(SQLException e)	
-	  		{
-            
-		   		System.out.println(e.getMessage());
-            }
-
 	
 	}
 

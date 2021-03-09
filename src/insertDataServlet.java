@@ -35,25 +35,28 @@ public class insertDataServlet extends HttpServlet {
 			 try {
 				
 				
-				 
+				 int returnVal=0;
 				// PreparedStatement st = con.prepareStatement("insert into notes values(?, ?)"); 
 				 String title = req.getParameter("title");
 				 String description = req.getParameter("description");
 				 dc.CreateTableNotes();
 				 if(title!="")
 				 {
-				 dc.InsertIntoTableNotes(title, description);
+				   returnVal = dc.InsertIntoTableNotes(title, description);
 				 
 				 dc.close();
+				 }
 				 
+				 if(returnVal==1)
+				 {
 		            PrintWriter out = res.getWriter(); 
 		            out.println("<html><body><b>Successfully Inserted"
 		                        + "</b></body></html>"); 
-				 
 				 }
-				 else {
+				 
+				 else if (returnVal==-1){
 					  PrintWriter mout = res.getWriter(); 
-			           mout.println("<html><body><b>Record Not Inserted"
+			           mout.println("<html><body><b>Record Not Inserted Might be already present"
 			                        + "</b></body></html>"); 
 					 
 					 
