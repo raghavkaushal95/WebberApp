@@ -40,7 +40,25 @@ public class insertDataServlet extends HttpServlet {
 				 String title = req.getParameter("title");
 				 String description = req.getParameter("description");
 				 dc.CreateTableNotes();
+				 if(title!="")
+				 {
 				 dc.InsertIntoTableNotes(title, description);
+				 
+				 dc.close();
+				 
+		            PrintWriter out = res.getWriter(); 
+		            out.println("<html><body><b>Successfully Inserted"
+		                        + "</b></body></html>"); 
+				 
+				 }
+				 else {
+					  PrintWriter mout = res.getWriter(); 
+			           mout.println("<html><body><b>Record Not Inserted"
+			                        + "</b></body></html>"); 
+					 
+					 
+					 
+				 }
 				/* 
 				 ResultSet rs = dc.DisplayAllRecords();
 				 JSONArray array = new JSONArray();
@@ -71,11 +89,12 @@ public class insertDataServlet extends HttpServlet {
 		            con.close(); 
 		           */ 
 				 
-			     dc.close();
+			   /*  dc.close();
 			 
 		            PrintWriter out = res.getWriter(); 
 		            out.println("<html><body><b>Successfully Inserted"
 		                        + "</b></body></html>"); 
+		                        */
 				 
 			 }
 			 catch (Exception e) { 

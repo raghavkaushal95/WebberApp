@@ -60,7 +60,7 @@ function callselectSingleServlet()
        return response.json();
      }
 
-     else
+     else if(!response.ok)
      throw new Error("Unable to Fetch the data from API");
     })
     
@@ -72,7 +72,9 @@ function callselectSingleServlet()
       
       
       
-      
+     
+    	   //use data
+    	
       
       document.getElementById('loading').innerHTML = "";
 
@@ -110,10 +112,20 @@ function callselectSingleServlet()
         	 
         	 }
         	 document.getElementById("loading").appendChild(table);
+           var buttonex= document.querySelector(".zoner");
+          // buttonex.remove();
+       
       
-      
-
-    }); 
+    })
+   
+   .catch((error) => {
+	   console.log("This is the"+ error)
+	   
+	   document.getElementById('loading').innerHTML = "<b>NO DATA PRESENT IN THE DATABSE<b>";
+	   
+	   
+	   
+	 });
     
  
    

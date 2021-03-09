@@ -48,22 +48,44 @@ form  input.input2{
     <p class="parag"> Central Elements 
       	
                  
-	 <form action="insertData" method="post" >
-	 Notes Title:<input class ="input2" type ="text" name="title"> <br>
+	 <form id ="Form1" method="post" >
+	 Notes Title:<input class ="input2" type ="text" name="title"  id="title-input" required> <br>
 	<textarea name="description" id="confirmationText" type="text" cols="46" rows ="20"></textarea>
-   	<input class="input1" type="submit" value="SUBMIT">
+   	<input class="input1" type="submit" value="SUBMIT" onClick="return CheckEmpty()" >
 	</form>
 	            
-	            
-	            
-	
-
-      
-    
-    
     
     </p>
 </div>
+   <script type="application/javascript">
    
+   function CheckEmpty() {
+	   
+	   event.preventDefault();
+	    var form  = document.getElementById("Form1");
+	    var x;
+	    x = document.getElementById("title-input").value;
+	    var y;
+	    y = document.getElementById("confirmationText").value;
+	    if (x == "") {
+	        alert("DO NOT LEAVE ANYTHING EMPTY");
+	        return false;
+	    }
+	
+	    else if( x!="")
+	    	{
+	    	document.getElementById("Form1").action ="insertData";
+	       document.getElementById("Form1").submit();
+	    //  var newForm =appendChild(titler);
+	        // document.getElementById("MyForm").action = "selectSingle";
+	    //  document.getElementById("MyForm").submit();
+             return true;
+	    	}
+   
+   
+
+   }
+   
+   </script>
 </body>
 </html>
