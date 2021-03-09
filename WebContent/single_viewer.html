@@ -44,8 +44,18 @@ function callselectSingleServlet()
       // document.getElementById("MyForm").action = "selectSingle";
   //  document.getElementById("MyForm").submit();
    var ider = document.getElementById("titler").id;
+   var loc = window.location.pathname
+   console.log("This is the "+loc);
+   var setPos = loc.lastIndexOf('/');
+   console.log("Substring before last separator = "+loc.substring(0,setPos+1));
+   
+   var substr =loc.substring(0,setPos+1);
+   
+   var urlp = new URL('http://localhost:'+window.location.port+substr+'selectSingle');
+   ;
+   
  
-   var urlp = new URL('http://localhost:8080/WebberApp/selectSingle');
+  
   //  var params = new URLSearchParams(urlp.search);
    urlp.searchParams.append(ider,titler);
    
@@ -117,7 +127,7 @@ function callselectSingleServlet()
        
       
     })
-   
+ 
    .catch((error) => {
 	   console.log("This is the"+ error)
 	   
