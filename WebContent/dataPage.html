@@ -50,8 +50,9 @@ function callselectDataServlet()
 
 					if (httpRequest.status === 200) 
 						{
-
+                                
 							var array = httpRequest.response;
+							console.log(array);
 							//var array = JSON.parse(httpRequest.responseText);
 							//var table = document.getElementById('contentTable');
 						
@@ -93,9 +94,12 @@ function callselectDataServlet()
 									var id = document.createTextNode(array[i].id);
 									var title = document.createTextNode(array[i].title);
 									var description = document.createTextNode(array[i].description);
-									cell1.appendChild(id);
-									cell2.appendChild(title);
-									cell3.appendChild(description);
+									cell1.innerHTML =array[i].id;
+									cell2.innerHTML =array[i].title;
+									cell3.innerHTML =array[i].description;
+								//cell1.appendChild(id);
+								//	cell2.appendChild(title);
+									//cell3.appendChild(description);
 								}	
 							
 							

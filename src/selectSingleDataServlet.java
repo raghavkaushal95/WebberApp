@@ -58,7 +58,7 @@ public class selectSingleDataServlet extends HttpServlet {
 		     //   }
 		      
 			 res.setContentType("application/json");
-		        res.getWriter().write(single_array.toString());
+		        res.getWriter().print(single_array.toString());
 		     //  System.out.println(array.toString()); 
 		       dc.close();
 			
