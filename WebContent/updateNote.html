@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+Hello , You are in Update Node view
+
+	<form id="MyForm" >
+ Notes Title:<input id ="titler" type ="text" name="titler"> <br>
+	<button class="zoner" onclick="callselectSingleServlet()">Check if name Exists</button>
+	</form>
+
+<div id="dummy"></div>
+
+<script>
+var new_div = document.createElement("div");
+var textArea = document.createElement("TEXTAREA");
+var new_div2 = document.createElement("div");
+textArea.setAttribute("id","tArea");
+function callselectSingleServlet(){
+	
+	 document.getElementById("dummy").innerHTML="";
+	var titler = document.getElementById('titler').value;
+	 event.preventDefault();
+	console.log(titler);// checking to see if it is possible to retrieve form input
+	
+	var ider = "titler";
+	fetch("http://localhost:8080/WebberApp/selectSingle?"+ider+"="+titler)
+	
+	.then(response =>{
+	     if(response.ok)
+	     {
+	       return response.json();
+	     }
+
+	     else
+	     throw new Error("Unable to Fetch the data from API");
+
+
+
+
+	})
+	
+	.then(data=> {
+
+      console.log(data);
+      
+      document.getElementById("dummy").innerHTML="This is aa valid record";
+      
+      var desc = data[0].description;
+      console.log("The description of this element is       "+desc);
+      
+     
+      new_div.style.height = "50px";
+      document.body.appendChild(new_div);
+      
+      textArea.innerHTML="";
+      var textAreaData = document.createTextNode(desc);
+      textArea.rows="5";
+      textArea.cols ="40";
+      textArea.appendChild(textAreaData);
+      document.body.appendChild(textArea);
+      var desc2 = desc;
+      console.log("The second  description of the content is "+desc2);
+     
+      new_div2.style.height = "50px";
+      document.body.appendChild(new_div2);
+      
+      var z=document.getElementById('tArea').value;
+      
+      var button1 = document.createElement("BUTTON");
+     button1.id='btn1';
+     button1.innerHTML="Go Back right now";
+     document.body.appendChild(button1);
+      document.getElementById("btn1").onclick = function() 
+       {
+    	  var n=document.getElementById('tArea').value;
+    	  if(z==n||n==desc2)
+    		  {
+    		  
+    		  alert("Same Data cannot be submitted. Enter something new!!!");
+    		  }
+    	  else if (z!=n && n!=desc2)
+    		  {
+    		    alert("adding new data");
+    		  
+    		  }
+    	  z= n;
+    	   
+       };
+     
+
+	})
+	
+	.catch((error) => {
+	    // Handle the error
+	   // console.log("This is the"+ error);
+	   
+	  // document.getElementById('loading').innerHTML = "<b>NO DATA PRESENT IN THE DATABSE<b>";
+	   
+	    
+	    new_div.remove();
+	    textArea.remove();
+	    alert("Enter a valid record to update");
+	    document.getElementById("dummy").innerHTML= "<b> No such record exists</b> Enter a new title ";
+	  
+	  });
+
+	 
+	
+	
+	
+	
+}
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
