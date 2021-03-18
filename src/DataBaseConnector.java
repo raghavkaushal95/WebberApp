@@ -27,9 +27,12 @@ public class DataBaseConnector {
 	
 	public String QUERY_ONE_RECORD= "SELECT "+COLUMN_NOTE_ID+", "+COLUMN_NOTE_NAME+", "+ COLUMN_NOTE_DESC+" FROM "+ TABLE_NOTES+" WHERE "+COLUMN_NOTE_NAME +" = ?";
 	
+	public String UPDATE_DESC = "UPDATE "+TABLE_NOTES+" SET "+COLUMN_NOTE_DESC +" = ? "+"WHERE "+COLUMN_NOTE_NAME+" = ?";
+	
 	public PreparedStatement view_all_records;
 	public PreparedStatement query_single_record;
 	public PreparedStatement count_records;
+	public PreparedStatement update_record;
 	
 	public String COUNT_ALL_RECORDS ="SELECT COUNT(*) FROM "+ TABLE_NOTES;
 	public boolean open() 
@@ -42,6 +45,7 @@ public class DataBaseConnector {
 			count_records = conn.prepareStatement(COUNT_ALL_RECORDS);
 			view_all_records = conn.prepareStatement(Query_All_Records);
 			query_single_record = conn.prepareStatement(QUERY_ONE_RECORD);//, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			update_record = conn.prepareStatement(UPDATE_DESC);
 			System.out.println("Connection established");
 			return true;
 		    }
@@ -181,6 +185,41 @@ public class DataBaseConnector {
 		     return 1;
 		
 	
+	}
+	public int UpdateTableNotes(String name, String desc) throws Exception
+	{
+		//public String UPDATE_DESC = "UPDATE "+TABLE_NOTES+" SET "+COLUMN_NOTE_DESC +" = ? "+"WHERE "+COLUMN_NOTE_NAME+" = ?";
+		int affect =-1;
+		try {
+		update_record.setString(1, desc);
+		update_record.setString(2, name);
+		
+		 int affectedRows = update_record.executeUpdate();
+    	 
+    	 if(affectedRows!=1)
+		   {
+			   
+			   
+			   throw new SQLException("Couldn't update the record Error occurred!");
+		   }
+    	 
+    	 else if(affectedRows==1)
+    	 {
+    		 System.out.println(" Record Updated Successfully");
+    		 affect=1;
+    	 }
+    	 
+		}
+		catch(Exception e)
+		{
+			
+			 System.out.println(e.getMessage());
+  		   e.printStackTrace();
+		}
+		
+		return affect;
+		
+		
 	}
 
 	

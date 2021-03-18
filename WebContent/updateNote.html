@@ -18,17 +18,33 @@ Hello , You are in Update Node view
 var new_div = document.createElement("div");
 var textArea = document.createElement("TEXTAREA");
 var new_div2 = document.createElement("div");
+var new_div3 = document.createElement("div");
+var new_div4 =document.createElement("div");
+var titler = document.getElementById('titler').value;
 textArea.setAttribute("id","tArea");
 function callselectSingleServlet(){
-	
+	  new_div4.innerHTML ="";
 	 document.getElementById("dummy").innerHTML="";
-	var titler = document.getElementById('titler').value;
+	 titler = document.getElementById('titler').value;
 	 event.preventDefault();
 	console.log(titler);// checking to see if it is possible to retrieve form input
 	
-	var ider = "titler";
-	fetch("http://localhost:8080/WebberApp/selectSingle?"+ider+"="+titler)
+	var title_head = "titler";
 	
+	var loc = window.location.pathname;
+	console.log(loc);
+	var pos = loc.lastIndexOf('/');
+	var substr = loc.substring(0,pos+1);
+	console.log(substr);
+	console.log(location.port);
+	//fetch("http://localhost:8080/WebberApp/selectSingle?"+ider+"="+titler)
+	//fetch("http://localhost:"+location.port+substr+"selectSingle")// ?"+ider+"="+titler)
+	
+	
+	  var urlp = new URL('http://localhost:'+location.port+substr+'selectSingle');
+	 urlp.searchParams.append(title_head,titler);
+	 
+	 fetch(urlp)
 	.then(response =>{
 	     if(response.ok)
 	     {
@@ -47,7 +63,7 @@ function callselectSingleServlet(){
 
       console.log(data);
       
-      document.getElementById("dummy").innerHTML="This is aa valid record";
+      document.getElementById("dummy").innerHTML="This is a valid record";
       
       var desc = data[0].description;
       console.log("The description of this element is       "+desc);
@@ -57,6 +73,8 @@ function callselectSingleServlet(){
       document.body.appendChild(new_div);
       
       textArea.innerHTML="";
+      
+  
       var textAreaData = document.createTextNode(desc);
       textArea.rows="5";
       textArea.cols ="40";
@@ -68,23 +86,44 @@ function callselectSingleServlet(){
       new_div2.style.height = "50px";
       document.body.appendChild(new_div2);
       
-      var z=document.getElementById('tArea').value;
+      new_div3.style.height ="30px";
+      document.body.appendChild(new_div3);
       
-      var button1 = document.createElement("BUTTON");
+      var z=document.getElementById('tArea').value;
+     
+    if(!document.body.contains(document.getElementById('btn1')))
+    { 
+    	var button1 = document.createElement("BUTTON");
      button1.id='btn1';
-     button1.innerHTML="Go Back right now";
-     document.body.appendChild(button1);
+     button1.innerHTML="Update Record now";
+     new_div3.appendChild(button1);
+    }
+    else{
+    	
+    	
+    	//button1.parentNode.insertBefore(textArea,button1);
+    	
+    	
+    }
       document.getElementById("btn1").onclick = function() 
        {
     	  var n=document.getElementById('tArea').value;
     	  if(z==n||n==desc2)
     		  {
-    		  
+    		  new_div4.innerHTML="<html><body><b>Same Record entered</b></body></html>";
+    		  document.body.appendChild(new_div4);
+
     		  alert("Same Data cannot be submitted. Enter something new!!!");
     		  }
     	  else if (z!=n && n!=desc2)
     		  {
+    		  fetchUpdate(titler,n);
     		    alert("adding new data");
+    		    
+    		    // Call the Update Servlet. Update Servlet just needs the name and the updated data
+    		    //Use the method  which uses an intrinsic fetch API call.
+    		    //Make sure to pass the name of the object.
+    		   //
     		  
     		  }
     	  z= n;
@@ -100,15 +139,89 @@ function callselectSingleServlet(){
 	   
 	  // document.getElementById('loading').innerHTML = "<b>NO DATA PRESENT IN THE DATABSE<b>";
 	   
-	    
+	     
+	
+	  
 	    new_div.remove();
 	    textArea.remove();
 	    alert("Enter a valid record to update");
 	    document.getElementById("dummy").innerHTML= "<b> No such record exists</b> Enter a new title ";
-	  
+	   
+	    if(document.body.contains(document.getElementById('btn1')))
+	    	{
+	    	document.getElementById("btn1").remove();	
+	    	}
+	    
+	   // return document.getElementById("dummy");
+	 
 	  });
 
 	 
+	
+	
+	
+	
+}
+function fetchUpdate(name,text)
+{
+	var porter = location.port;
+	var locator = window.location.pathname;
+	console.log(locator);
+	var posit = locator.lastIndexOf('/');
+	var substring1 = locator.substring(0,posit+1);
+	console.log(substring1);
+	console.log(location.port);
+	//fetch("http://localhost:8080/WebberApp/selectSingle?"+ider+"="+titler)
+	//fetch("http://localhost:"+location.port+substr+"selectSingle")// ?"+ider+"="+titler)
+	
+	//urlp.searchParams.append(title_head,titler);
+	  var urlp = new URL('http://localhost:'+porter+substring1+'updateSingle');
+	 urlp.searchParams.append('titler',name);
+	 urlp.searchParams.append('n',text);
+	 
+	 fetch(urlp)
+	//  fetch("http://localhost:8080/WebberApp/updateSingle?titler="+name+"&n="+text)
+	  //fetch("http://localhost:8080/WebberApp/updateSingle?titler="+name+"&n="+text)
+      .then(response =>
+          {
+
+            if(response.ok)
+            return response.text();
+
+            else
+            throw new Error("Unable to Fetch the data from API");
+
+          })
+          
+          .then(html=>
+          {  
+        	  console.log(html);
+        	  new_div4.style.height ="30px";
+        	  new_div4.innerHTML =html;
+              document.body.appendChild(new_div4);
+        	  
+        	  
+          })
+	
+          .catch((error) => {
+      	    // Handle the error
+      	   // console.log("This is the"+ error);
+      	   
+      	  // document.getElementById('loading').innerHTML = "<b>NO DATA PRESENT IN THE DATABSE<b>";
+      	   
+//       	       document.getElementById("btn1").remove();
+      	  
+//       	    new_div.remove();
+//       	    textArea.remove();
+//       	    alert("Enter a valid record to update");
+//       	    document.getElementById("dummy").innerHTML= "<b> No such record exists</b> Enter a new title ";
+        	  console.log('Something went wrong.', err);
+      	 
+      	  });
+
+	
+	
+	
 	
 	
 	
@@ -118,8 +231,8 @@ function callselectSingleServlet(){
 
 
 
-</script>
 
+</script>
 
 
 

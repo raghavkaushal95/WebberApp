@@ -31,5 +31,17 @@
 		 <url-pattern>/selectSingle</url-pattern>
   </servlet-mapping>
 	
+    <servlet>
+	    <servlet-name>man</servlet-name>
+     	<servlet-class>updateSingleDataServlet</servlet-class>
+  </servlet>
+	
+  <servlet-mapping>
+  		 <servlet-name>man</servlet-name>
+		 <url-pattern>/updateSingle</url-pattern>
+  </servlet-mapping>
+	
+  
+  
   
 </web-app>

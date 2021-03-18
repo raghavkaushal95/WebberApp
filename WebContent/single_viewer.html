@@ -51,8 +51,9 @@ function callselectSingleServlet()
    var setPos = loc.lastIndexOf('/');
    console.log("Substring before last separator = "+loc.substring(0,setPos+1));
    
+  
    var substr =loc.substring(0,setPos+1);
-   
+//                    "http://localhost:8080/WebberApp/selectSingle?"+ider+"="+titler
    var urlp = new URL('http://localhost:'+window.location.port+substr+'selectSingle');
    ;
    
