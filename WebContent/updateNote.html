@@ -176,10 +176,21 @@ function fetchUpdate(name,text)
 	
 	//urlp.searchParams.append(title_head,titler);
 	  var urlp = new URL('http://localhost:'+porter+substring1+'updateSingle');
-	 urlp.searchParams.append('titler',name);
-	 urlp.searchParams.append('n',text);
+	// urlp.searchParams.append('titler',name);
+	// urlp.searchParams.append('n',text);
+	
+	const params = new URLSearchParams({
+	        titler: name,
+	        n: text
+	
+	})
+	
 	 
-	 fetch(urlp)
+	 fetch(urlp, {
+		  method: "post",
+		  //make sure to serialize your JSON body
+		  body: params
+		})
 	//  fetch("http://localhost:8080/WebberApp/updateSingle?titler="+name+"&n="+text)
 	  //fetch("http://localhost:8080/WebberApp/updateSingle?titler="+name+"&n="+text)
       .then(response =>

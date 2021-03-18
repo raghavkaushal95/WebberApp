@@ -40,6 +40,16 @@
   		 <servlet-name>man</servlet-name>
 		 <url-pattern>/updateSingle</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+	    <servlet-name>emp</servlet-name>
+     	<servlet-class>deleteSingleNote</servlet-class>
+  </servlet>
+	
+  <servlet-mapping>
+  		 <servlet-name>emp</servlet-name>
+		 <url-pattern>/deleteSingle</url-pattern>
+  </servlet-mapping>
 	
   
   

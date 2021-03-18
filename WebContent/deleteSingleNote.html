@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+
+You are in delete Single Note view now.!!! 
+
+  <form id="MyForm" >
+     Name of the note scheduled for deletion:<input id ="namer" type ="text" name="titler"> <br>
+	<button class="zoner" onclick="calldeleteSingleServlet()">Search Note</button>
+	</form>
+<br/><br/>
+
+
+
+<div id="dummy"></div>
+<script>
+
+var div_1 = document.createElement("div"); 
+var new_div4 =document.createElement("div");
+function calldeleteSingleServlet()
+   {
+	 var title  = document.getElementById("namer").value;
+
+		var loc = window.location.pathname;
+		console.log(loc);
+		var pos = loc.lastIndexOf('/');
+		var substr = loc.substring(0,pos+1);
+		console.log(substr);
+		console.log(location.port);
+		
+		 event.preventDefault();
+		 var urlp = new URL('http://localhost:'+location.port+substr+'selectSingle');
+		 urlp.searchParams.append('titler',title);
+		 
+		 fetch(urlp)
+		 .then(response =>{
+	     if(response.ok)
+	     {
+	       return response.json();
+	     }
+
+	     else
+	     throw new Error("Unable to Fetch the data from API");
+
+
+
+
+	})
+	
+	 .then(data=> {
+		 
+		 document.getElementById("dummy").innerHTML="<b> THE RECORD EXISTS<b>";
+		 console.log(data);
+		 var btn = document.createElement("BUTTON");
+		 btn.id='butt1';
+  
+		 
+		 if(!document.body.contains(document.getElementById("butt1")))
+		 { btn.innerHTML = "Delete"; 
+		 // Insert text
+		 
+		  document.body.appendChild(div_1);
+		   div_1.appendChild(btn); 
+		 }
+		 
+		 document.getElementById("butt1").onclick = function() {
+			 
+		
+			 fetchDelete(title);
+		 
+		 
+		 
+		 };
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+	 })
+	
+   .catch((error) => {
+	   if(document.body.contains(document.getElementById("butt1")))
+		   document.getElementById("butt1").remove();
+	   
+	   
+	    if(document.body.contains(new_div4))
+		   new_div4.innerHTML=""
+	   
+		   document.getElementById("dummy").innerHTML="<b> No Record to Delete <b>";
+	  
+   });
+   
+   
+   
+   
+   
+   
+}
+
+   function fetchDelete(name)
+   {
+	   var loc = window.location.pathname;
+		console.log(loc);
+		var pos = loc.lastIndexOf('/');
+		var substr = loc.substring(0,pos+1);
+		console.log(substr);
+		console.log(location.port);
+		
+		 event.preventDefault();
+		 var urlp = new URL('http://localhost:'+location.port+substr+'deleteSingle');
+		 urlp.searchParams.append('titler',name);
+		 
+		 fetch(urlp, {
+			  method: "post"
+			})
+			
+		.then(response =>
+          {
+
+            if(response.ok)
+            return response.text();
+
+            else
+            throw new Error("Unable to Fetch the data from API");
+
+          })
+          
+          .then(html=>
+          {  
+        	  console.log(html);
+        	  new_div4.style.height ="30px";
+        	  new_div4.innerHTML =html;
+              document.body.appendChild(new_div4);
+        	  
+        	  
+          })
+	
+          .catch((error) => {
+      	    // Handle the error
+      	   // console.log("This is the"+ error);
+      	   
+      	  // document.getElementById('loading').innerHTML = "<b>NO DATA PRESENT IN THE DATABSE<b>";
+      	   
+//       	       document.getElementById("btn1").remove();
+      	  
+//       	    new_div.remove();
+//       	    textArea.remove();
+//       	    alert("Enter a valid record to update");
+//       	    document.getElementById("dummy").innerHTML= "<b> No such record exists</b> Enter a new title ";
+        	  console.log('Something went wrong.', err);
+      	 
+      	  });
+
+	
+	
+	
+	
+	}
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

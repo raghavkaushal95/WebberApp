@@ -29,10 +29,12 @@ public class DataBaseConnector {
 	
 	public String UPDATE_DESC = "UPDATE "+TABLE_NOTES+" SET "+COLUMN_NOTE_DESC +" = ? "+"WHERE "+COLUMN_NOTE_NAME+" = ?";
 	
+	public String DELETE_RECORD = "DELETE FROM "+ TABLE_NOTES+ " WHERE "+COLUMN_NOTE_NAME+" = ?";
 	public PreparedStatement view_all_records;
 	public PreparedStatement query_single_record;
 	public PreparedStatement count_records;
 	public PreparedStatement update_record;
+	public PreparedStatement delete_record;
 	
 	public String COUNT_ALL_RECORDS ="SELECT COUNT(*) FROM "+ TABLE_NOTES;
 	public boolean open() 
@@ -46,6 +48,7 @@ public class DataBaseConnector {
 			view_all_records = conn.prepareStatement(Query_All_Records);
 			query_single_record = conn.prepareStatement(QUERY_ONE_RECORD);//, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			update_record = conn.prepareStatement(UPDATE_DESC);
+			delete_record = conn.prepareStatement(DELETE_RECORD);
 			System.out.println("Connection established");
 			return true;
 		    }
@@ -93,7 +96,18 @@ public class DataBaseConnector {
 				 query_single_record.close();
 				 
 			 }
-			  
+			 
+			 if(update_record !=null)
+			 {
+				 update_record.close();
+				 
+			 }
+			 if(delete_record!=null)
+			 {
+				 
+				 delete_record.close();
+				 
+			 }
 			
 		    if(conn!=null)
 			  {
@@ -222,6 +236,54 @@ public class DataBaseConnector {
 		
 	}
 
+	
+	public int DeleteTableNotes(String name) throws Exception
+	{
+		//public String DELETE_RECORD = "DELETE FROM "+ TABLE_NOTES+ " WHERE "+COLUMN_NOTE_NAME+" = ?";
+		int affect =-1;
+		
+		try {
+			delete_record.setString(1,name);
+			 
+			int affectedRows = delete_record.executeUpdate();
+			
+			if(affectedRows!=1)
+			{
+				
+				System.out.println("Some Error Occurred");
+				throw new SQLException("Couldn't delete the record Error occurred!");
+				
+			}
+			else if (affectedRows==1)
+			{
+				 System.out.println(" Record Updated Successfully");
+	    		 affect=1;
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+		catch(Exception e)
+		{
+			 System.out.println(e.getMessage());
+	  		   e.printStackTrace();
+			
+			
+			
+			
+		}
+		
+		
+		
+		return affect;
+		
+		
+		
+	}
 	
 	
 	public ResultSet DisplayAllRecords() throws Exception

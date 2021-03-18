@@ -20,7 +20,7 @@ public class updateSingleDataServlet extends HttpServlet
 {
 	DataBaseConnector dc = new DataBaseConnector();
    
-	 public void doGet(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException{
+	 public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException{
 		 
 			if(!dc.open())
 			{
