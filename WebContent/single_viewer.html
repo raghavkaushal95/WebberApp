@@ -31,6 +31,7 @@ border : solid 1px black;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="application/javascript">
+//var table = document.createElement("TABLE");
 function callselectSingleServlet()
 {
    // var result = document.forms["MyForm"].submit();
@@ -89,7 +90,7 @@ function callselectSingleServlet()
     	   //use data
     	
       
-      document.getElementById('loading').innerHTML = "";
+     document.getElementById('loading').innerHTML = "";
 
 		var array = data;
                
@@ -102,14 +103,14 @@ function callselectSingleServlet()
         	 }
       
          var table = document.createElement("TABLE");
-      
+    
          var tr =table.insertRow(0);
          for(var i=0;i<headerData.length;i++)
         	 {
         	   var cell = tr.insertCell();
         	   cell.innerHTML= headerData[i];
         	 }
-         document.getElementById("loading").appendChild(table);
+     //    document.getElementById("loading").appendChild(table);
 
          console.log(headerData);
         

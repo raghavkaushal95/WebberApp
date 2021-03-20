@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
 
+@WebServlet("/insertData")
 public class insertDataServlet extends HttpServlet {
 	
 	

@@ -46,7 +46,7 @@ function callselectDataServlet()
 			if (httpRequest.readyState === XMLHttpRequest.DONE) 
 			{
 
-			 document.getElementById('loading').innerHTML = "";
+			document.getElementById('loading').innerHTML = "";
 
 					if (httpRequest.status === 200) 
 						{
@@ -106,7 +106,7 @@ function callselectDataServlet()
 							
 							 //var tablex = document.getElementById('contentTable');
 							var btn = document.querySelector(".oner"); 
-					              btn.remove();
+					             btn.remove();
 					              document.getElementById('loading').innerHTML="";
 					           document.getElementById('loading').appendChild(table);
 						}
