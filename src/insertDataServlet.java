@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import org.json.JSONString;
 
 @WebServlet("/insertData")
-public class insertDataServlet extends HttpServlet {
+public class insertDataServlet extends HttpServlet { //fixyellow
 	
 	
 	 DataBaseConnector dc = new DataBaseConnector();
